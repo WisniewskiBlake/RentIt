@@ -21,6 +21,8 @@ public class HttpURLConnectionReader {
 
     private ContentValues params;
 
+    private StringBuilder response;
+
     public HttpURLConnectionReader(String script)
     {
         scriptName = script;
@@ -48,6 +50,10 @@ public class HttpURLConnectionReader {
                 postData.append(URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(params.getAsString(key), "UTF-8"));
             }
 
+            //
+            Log.d("DEBUG", "POST " + postData.toString());
+            //
+
         } catch (IOException e) {
             Log.d("DEBUG", "Error building POST data: " + e.toString());
         }
@@ -60,7 +66,6 @@ public class HttpURLConnectionReader {
     {
         URL url = null;
         BufferedReader reader = null;
-        StringBuilder stringBuilder;
 
         HttpURLConnection connection;
 
@@ -75,8 +80,6 @@ public class HttpURLConnectionReader {
 
             // Write POST data from params
             OutputStream outputStream = connection.getOutputStream();
-
-            Log.d("DEBUG", getPostData());
 
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
             bufferedWriter.write(getPostData());
@@ -104,14 +107,19 @@ public class HttpURLConnectionReader {
 
                 // Read the output from the server
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                stringBuilder = new StringBuilder();
+                response = new StringBuilder();
 
                 String line = null;
                 while ((line = reader.readLine()) != null)
                 {
-                    stringBuilder.append(line + "\n");
+                    response.append(line + "\n");
                 }
-                return stringBuilder.toString();
+
+                //
+                Log.d("DEBUG", "RESPONSE " + response);
+                //
+
+                return response.toString();
 
             }
             else {
