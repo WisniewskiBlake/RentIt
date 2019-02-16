@@ -20,7 +20,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import edu.svsu.rentit.models.User;
-import edu.svsu.rentit.utilities.PermissionManager;
 import edu.svsu.rentit.workers.LoginBackgroundWorker;
 import edu.svsu.rentit.R;
 
@@ -88,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 Log.d("DEBUG", "WRITE EXTERNAL PERMISSION  NOT  GRANTED");
 
-                ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PermissionManager.WRITE_EXTERNAL_CODE);
+                ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
             } else {
                 Log.d("DEBUG", "WRITE EXTERNAL PERMISSION GRANTED");
