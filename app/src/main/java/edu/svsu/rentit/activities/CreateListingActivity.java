@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import edu.svsu.rentit.models.User;
 import edu.svsu.rentit.workers.CreateListingBackgroundWorker;
@@ -36,12 +37,24 @@ public class CreateListingActivity extends AppCompatActivity {
                 String title = etTitle.getEditableText().toString();
                 EditText etDescription = findViewById(R.id.txt_Description);
                 String description = etDescription.getEditableText().toString();
+                // Address info
                 EditText etAddress = findViewById(R.id.txt_Address);
                 String address = etAddress.getEditableText().toString();
+                EditText etCity = findViewById(R.id.txt_City);
+                String city = etCity.getEditableText().toString();
+                Spinner etState = findViewById(R.id.spinner_State);
+                String state = etState.getSelectedItem().toString();
+                EditText etZip = findViewById(R.id.txt_Zip);
+                String zip = etZip.getEditableText().toString();
+                Spinner etCountry = findViewById(R.id.spinner_Country);
+                String country = etCountry.getSelectedItem().toString();
+
                 EditText etContact = findViewById(R.id.txt_Contact);
                 String contact = etContact.getEditableText().toString();
                 EditText etPrice = findViewById(R.id.txt_Price);
                 String price = etPrice.getEditableText().toString();
+
+                address = address + ", " + city + ", " + state + " " + zip + ", " + country;
 
                 CreateListingBackgroundWorker listingWorker = new CreateListingBackgroundWorker(CreateListingActivity.this);
                 listingWorker.execute(currentUser.getIdString(), title, description, address, contact, price);

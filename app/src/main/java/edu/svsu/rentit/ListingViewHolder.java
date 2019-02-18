@@ -2,6 +2,7 @@ package edu.svsu.rentit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ public class ListingViewHolder extends RecyclerView.ViewHolder implements View.O
     private TextView title;
     private TextView description;
     private TextView price;
+    private TextView distance;
 
     public ListingViewHolder(View view) {
         super(view);
@@ -26,15 +28,16 @@ public class ListingViewHolder extends RecyclerView.ViewHolder implements View.O
         title = (TextView) view.findViewById(R.id.textView1);
         description = (TextView) view.findViewById(R.id.textView2);
         price = (TextView) view.findViewById(R.id.textView3);
+        distance = (TextView) view.findViewById(R.id.distance_view);
     }
 
-    public void setModel(Listing newListing)
-    {
+    public void setModel(Listing newListing) {
         listing = newListing;
 
         title.setText(listing.getTitle());
         description.setText(listing.getDescription());
         price.setText(listing.getPrice());
+        distance.setText(String.format("%.2f", listing.getDistance()) + " mi.");
     }
 
     @Override
