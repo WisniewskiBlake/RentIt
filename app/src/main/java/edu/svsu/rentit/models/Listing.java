@@ -9,14 +9,17 @@ public class Listing implements Serializable {
     public String address;
     public String contact;
     public String price;
+    public double distance;
 
-    public Listing(String newTitle, String newDescription, String newAddress, String newContact, String newPrice) {
+    public Listing(String newTitle, String newDescription, String newAddress, double newDistance,
+                   String newContact, String newPrice) {
 
         title = newTitle;
         description = newDescription;
         address = newAddress;
         contact = newContact;
         price = newPrice;
+        distance = newDistance;
 
     }
 
@@ -40,5 +43,6 @@ public class Listing implements Serializable {
     {
         return price;
     }
+    public double getDistance() { return distance; }
 
 }

@@ -21,7 +21,7 @@ public class CreateListingBackgroundWorker extends AsyncTask<String, String, Str
     protected String doInBackground(String... params) {
 
         //
-        HttpURLConnectionReader reader = new HttpURLConnectionReader("create_listing.php");
+        HttpURLConnectionReader reader = new HttpURLConnectionReader("create_listing_geo.php");
 
         reader.addParam("userid", params[0]);
         reader.addParam("title", params[1]);
