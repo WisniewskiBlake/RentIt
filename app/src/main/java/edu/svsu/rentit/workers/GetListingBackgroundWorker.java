@@ -21,6 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.svsu.rentit.HttpURLConnectionReader;
 import edu.svsu.rentit.models.Listing;
@@ -28,19 +29,21 @@ import edu.svsu.rentit.activities.MainActivity;
 import edu.svsu.rentit.R;
 import edu.svsu.rentit.ListingViewAdapter;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 
 public class GetListingBackgroundWorker extends AsyncTask<String, String, String> {
 
     Context context;
     AlertDialog alertDialog;
-
+    ArrayList<Listing> listings = new ArrayList<>();
 
     public GetListingBackgroundWorker(Context ctx) {
         context = ctx;
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    public String doInBackground(String... params) {
 
         //
         HttpURLConnectionReader reader = new HttpURLConnectionReader("get_listing.php");
@@ -58,9 +61,7 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
     }
 
     @Override
-    protected void onPostExecute(String result) {
-
-        ArrayList<Listing> listings = new ArrayList<>();
+    public void onPostExecute(String result) {
 
         try {
 
@@ -72,9 +73,11 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
                 String description = jb.getString("description");
                 String price = jb.getString("price");
 
+                //make new identical class and change this to have a text array and data
+                //array just like Caravan app
                 listings.add(new Listing(title, description, "", "", "$" + price + ".00"));
-            }
 
+            }
 
             RecyclerView recyclerView = (RecyclerView) ((MainActivity)context).findViewById(R.id.listing_recycler);
             ListingViewAdapter adapter = new ListingViewAdapter(listings, context);
@@ -82,12 +85,10 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-
-
         } catch (Exception e) {
             Log.d("DEBUG", "Exeption: " + e.toString());
         }
 
-
     }
+
 }
