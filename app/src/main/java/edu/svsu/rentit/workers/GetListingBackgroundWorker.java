@@ -2,10 +2,12 @@ package edu.svsu.rentit.workers;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.PrecomputedText;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -30,21 +32,26 @@ import edu.svsu.rentit.R;
 import edu.svsu.rentit.ListingViewAdapter;
 
 
-public class GetListingBackgroundWorker extends AsyncTask<String, String, String> {
+public class GetListingBackgroundWorker extends AsyncTask<GetLocationBackgroundWorker, String, String> {
 
     Context context;
     AlertDialog alertDialog;
 
+    double lati = 0.0;
+    double longi = 0.0;
 
     public GetListingBackgroundWorker(Context ctx) {
         context = ctx;
     }
 
     @Override
-    protected String doInBackground(String... params) {
-
+    protected String doInBackground(GetLocationBackgroundWorker... params) {
+        GetLocationBackgroundWorker locationWorker = params[0];
         //
         HttpURLConnectionReader reader = new HttpURLConnectionReader("get_listing_geo.php");
+
+        lati = locationWorker.getLati();
+        longi = locationWorker.getLongi();
 
         String response;
         try {
@@ -75,7 +82,7 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
                 double lat1 = jb.getDouble("lat");
                 double lon1 = jb.getDouble("lon");
 
-                double distance = distance(lat1,lon1,43.549014678840194,-83.95262718200684);
+                double distance = distance(lat1,lon1,lati,longi);
 
                 listings.add(new Listing(title, description,  "", distance, "", "$" + price + ".00"));
             }

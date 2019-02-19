@@ -1,7 +1,10 @@
 package edu.svsu.rentit.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -9,6 +12,7 @@ import android.view.MenuItem;
 
 import edu.svsu.rentit.R;
 import edu.svsu.rentit.workers.GetListingBackgroundWorker;
+import edu.svsu.rentit.workers.GetLocationBackgroundWorker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,10 +23,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //check for a location resource - WiFi, data, etc.
+        // if not ask to enable - or use static location
+        // stop location services at some point
+        GetLocationBackgroundWorker locationWorker = new GetLocationBackgroundWorker(this);
+        locationWorker.execute();
 
         GetListingBackgroundWorker listingWorker = new GetListingBackgroundWorker(MainActivity.this);
-        listingWorker.execute();
-
+        listingWorker.execute(locationWorker);
     }
 
     @Override
@@ -48,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }
 
