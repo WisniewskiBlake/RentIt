@@ -2,6 +2,7 @@ package edu.svsu.rentit.workers;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
@@ -80,12 +81,10 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
                 listings.add(new Listing(title, description,  "", distance, "", "$" + price + ".00"));
             }
 
-
-            RecyclerView recyclerView = (RecyclerView) ((MainActivity)context).findViewById(R.id.listing_recycler);
-            ListingViewAdapter adapter = new ListingViewAdapter(listings, context);
-
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            // Send listing results back to MainActivity
+            Intent intent = new Intent("listingsGet");
+            intent.putExtra("LISTINGS",listings);
+            context.sendBroadcast(intent);
 
 
 

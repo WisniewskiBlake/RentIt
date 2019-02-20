@@ -7,11 +7,20 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Filter;
 
+import java.util.ArrayList;
+
+import edu.svsu.rentit.ListingViewAdapter;
 import edu.svsu.rentit.R;
+import edu.svsu.rentit.models.Listing;
 import edu.svsu.rentit.models.User;
 import edu.svsu.rentit.workers.GetListingBackgroundWorker;
 import edu.svsu.rentit.workers.GetLoginTokenBackgroundWorker;
@@ -21,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean validating;
     private boolean validated;
     User currentUser;
+
+    ArrayList<Listing> listings = new ArrayList<Listing>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +74,25 @@ public class MainActivity extends AppCompatActivity {
             }
         }, new IntentFilter("loginSuccess"));
 
+        // Register get listing receiver
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                listings = (ArrayList<Listing>)intent.getSerializableExtra("LISTINGS");
+
+                updateListings(listings);
+            }
+        }, new IntentFilter("listingsGet"));
+
+    }
+
+    private void updateListings(ArrayList<Listing> newListings) {
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listing_recycler);
+        ListingViewAdapter adapter = new ListingViewAdapter(newListings, MainActivity.this);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
 
     @Override
@@ -72,6 +102,20 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.validate).setVisible(false);
         menu.findItem(R.id.action_logout).setVisible(false);
         menu.findItem(R.id.action_view_profile).setVisible(false);
+
+        SearchView searchView = (SearchView)findViewById(R.id.action_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                getFilter().filter(newText);
+                return false;
+            }
+        });
+
         return true;
     }
 
@@ -124,6 +168,47 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //filters the exampleFullList containing all entries based on query and returns
+    //the results which then populate the exampleList
+    //@Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Listing> filteredList = new ArrayList<>();
+
+            if(constraint == null || constraint.length() == 0){
+                filteredList.addAll(listings);
+            }else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for(Listing item : listings){
+                    if(item.getTitle().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        //creates a new adapter and fills it with matched entries only
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            updateListings((ArrayList)results.values);
+            /*
+            exampleList.clear();
+            exampleList.addAll((List)results.values);
+            adapter = new ListingViewAdapter(exampleList, MainActivity.this);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            */
+        }
+    };
 
     public void setUserValidated() {
         validating = false;
