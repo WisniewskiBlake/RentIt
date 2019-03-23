@@ -70,6 +70,8 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
 
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject jb = jArray.getJSONObject(i);
+                int userId = jb.getInt("userId");
+                String username = jb.getString("username");
                 String title = jb.getString("title");
                 String description = jb.getString("description");
                 String price = jb.getString("price");
@@ -78,7 +80,7 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
 
                 double distance = distance(lat1,lon1,43.549014678840194,-83.95262718200684);
 
-                listings.add(new Listing(title, description,  "", distance, "", "$" + price + ".00"));
+                listings.add(new Listing(userId, username, title, description,  "", distance, "", "$" + price + ".00"));
             }
 
             // Send listing results back to MainActivity
@@ -89,6 +91,7 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
 
 
         } catch (Exception e) {
+            e.printStackTrace();
             Log.d("DEBUG", "Exeption: " + e.toString());
         }
 

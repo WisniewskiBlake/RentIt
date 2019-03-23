@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             invalidateOptionsMenu();
         } else if (id == R.id.action_view_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra("USER", currentUser);
+            intent.putExtra("CURRENT_USER", currentUser);
             startActivity(intent);
         }
 

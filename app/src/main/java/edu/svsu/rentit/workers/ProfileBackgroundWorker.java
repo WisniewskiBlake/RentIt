@@ -2,29 +2,32 @@ package edu.svsu.rentit.workers;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONObject;
 
 import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.activities.ProfileActivity;
 import edu.svsu.rentit.models.User;
 
-public class ProfileBackgroundWorker extends AsyncTask<User, String, String> {
+public class ProfileBackgroundWorker extends AsyncTask<String, String, String> {
 
     Context context;
-    User currentUser;
+
+    // It's really an int
+    String userId;
 
     public ProfileBackgroundWorker(Context ctx) {
         context = ctx;
     }
 
     @Override
-    protected String doInBackground(User... params) {
+    protected String doInBackground(String... params) {
 
-        currentUser = params[0];
+        userId = params[0];
 
-        //
-        HttpURLConnectionReader reader = new HttpURLConnectionReader("register.php");
-        reader.addParam("userid", currentUser.getIdString());
+        HttpURLConnectionReader reader = new HttpURLConnectionReader("get_profile.php");
+        reader.addParam("userid", userId);
 
         String response;
         try {
@@ -40,6 +43,7 @@ public class ProfileBackgroundWorker extends AsyncTask<User, String, String> {
     @Override
     protected void onPostExecute(String result) {
 
+        Log.d("DEBUG", result);
         try {
 
             JSONObject response = new JSONObject(result);
@@ -47,6 +51,8 @@ public class ProfileBackgroundWorker extends AsyncTask<User, String, String> {
             String first = response.getString("first");
             String last = response.getString("last");
             String bio = response.getString("bio");
+
+            ((ProfileActivity)context).setOutput(first + " " + last, bio);
 
         } catch (Exception e) {
 

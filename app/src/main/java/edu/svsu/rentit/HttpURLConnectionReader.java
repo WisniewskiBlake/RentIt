@@ -55,6 +55,7 @@ public class HttpURLConnectionReader {
             //
 
         } catch (IOException e) {
+            e.printStackTrace();
             Log.d("DEBUG", "Error building POST data: " + e.toString());
         }
 
