@@ -17,9 +17,11 @@ import android.view.MenuItem;
 import android.widget.Filter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import edu.svsu.rentit.ListingViewAdapter;
 import edu.svsu.rentit.R;
+import edu.svsu.rentit.RentItApplication;
 import edu.svsu.rentit.models.Listing;
 import edu.svsu.rentit.models.User;
 import edu.svsu.rentit.workers.GetListingBackgroundWorker;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
             String userId = sp.getString("UserId", "");
             String token = sp.getString("Token", "");
 
+            Log.d("DEBUG", "TOKEN FOUND - " + userId + " - " + token);
+
             // Update menu
             validating = true;
             invalidateOptionsMenu();
@@ -66,11 +70,12 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                currentUser = (User)intent.getSerializableExtra("USER");
-
                 validating = false;
                 validated = true;
                 invalidateOptionsMenu();
+
+                if (((RentItApplication) getApplication()).hasUser())
+                    currentUser = ((RentItApplication) getApplication()).getUser();
             }
         }, new IntentFilter("loginSuccess"));
 
@@ -86,10 +91,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateListings(ArrayList<Listing> newListings) {
+    private void updateListings(ArrayList<Listing> newListings)
+    {
+        // Only display active listings in MainActivity
+        ArrayList<Listing> activeListings = new ArrayList<>();
+        for (Listing l : newListings) {
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.listing_recycler);
-        ListingViewAdapter adapter = new ListingViewAdapter(newListings, MainActivity.this);
+            if (!l.getStatus().equals("inactive")) {
+                activeListings.add(l);
+            }
+        }
+
+        RecyclerView recyclerView = findViewById(R.id.listing_recycler);
+        ListingViewAdapter adapter = new ListingViewAdapter(activeListings, MainActivity.this);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -100,8 +114,9 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         menu.findItem(R.id.validate).setVisible(false);
-        menu.findItem(R.id.action_logout).setVisible(false);
+        menu.findItem(R.id.action_manage).setVisible(false);
         menu.findItem(R.id.action_view_profile).setVisible(false);
+        menu.findItem(R.id.action_logout).setVisible(false);
 
         SearchView searchView = (SearchView)findViewById(R.id.action_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -125,14 +140,16 @@ public class MainActivity extends AppCompatActivity {
             menu.findItem(R.id.validate).setVisible(true);
             menu.findItem(R.id.action_login).setVisible(false);
             menu.findItem(R.id.action_register).setVisible(true);
-            menu.findItem(R.id.action_logout).setVisible(false);
+            menu.findItem(R.id.action_manage).setVisible(false);
             menu.findItem(R.id.action_view_profile).setVisible(false);
+            menu.findItem(R.id.action_logout).setVisible(false);
         } else if (validated) {
             menu.findItem(R.id.validate).setVisible(false);
             menu.findItem(R.id.action_login).setVisible(false);
             menu.findItem(R.id.action_register).setVisible(false);
-            menu.findItem(R.id.action_logout).setVisible(true);
+            menu.findItem(R.id.action_manage).setVisible(true);
             menu.findItem(R.id.action_view_profile).setVisible(true);
+            menu.findItem(R.id.action_logout).setVisible(true);
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -148,8 +165,22 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_register) {
             startActivity(new Intent(this, RegisterActivity.class));
-        }else if(id == R.id.action_login){
+        }else if(id == R.id.action_login) {
             startActivity(new Intent(this, LoginActivity.class));
+        } else if (id == R.id.action_manage) {
+            Intent intent = new Intent(this, ManageListingsActivity.class);
+
+            ArrayList<Listing> userListings = new ArrayList<Listing>();
+            for (Listing listing : listings) {
+                if (listing.getUserId() == currentUser.getId())
+                    userListings.add(listing);
+            }
+
+            intent.putExtra("USER", currentUser);
+            intent.putExtra("USER_LISTINGS", userListings);
+
+            startActivity(intent);
+
         } else if (id == R.id.action_logout) {
 
             SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);

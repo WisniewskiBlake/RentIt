@@ -21,7 +21,7 @@ public class ProfileActivity extends AppCompatActivity {
     User currentUser;
 
     TextView txt_Name;
-    EditText txt_Bio;
+    TextView txt_Bio;
 
     Button btn_ViewListing;
     Button btn_CreateListing;
@@ -35,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         txt_Name = findViewById(R.id.tv_Profilename);
-        txt_Bio = findViewById(R.id.eT_bio);
+        txt_Bio = findViewById(R.id.textView_bio);
         btn_ViewListing = findViewById(R.id.btn_ViewListings);
         btn_CreateListing = findViewById(R.id.btn_CreateListing);
 
@@ -58,19 +58,6 @@ public class ProfileActivity extends AppCompatActivity {
         if (currentUser != null) {
             setUser(currentUser);
         }
-
-
-        Button btnCreate = findViewById(R.id.btn_CreateListing);
-        btnCreate.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(ProfileActivity.this, CreateListingActivity.class);
-                intent.putExtra("USER", currentUser);
-                startActivity(intent);
-
-            }
-        });
 
 
         Button btnView = findViewById(R.id.btn_ViewListings);

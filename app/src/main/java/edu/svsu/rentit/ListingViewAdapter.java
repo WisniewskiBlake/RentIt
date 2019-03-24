@@ -17,6 +17,7 @@ public class ListingViewAdapter extends RecyclerView.Adapter{
     Context context;
 
     public ListingViewAdapter(ArrayList<Listing> list, Context context) {
+
         this.list = list;
         this.context = context;
     }

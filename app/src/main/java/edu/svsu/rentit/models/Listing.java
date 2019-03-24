@@ -6,30 +6,21 @@ import java.io.Serializable;
 
 public class Listing implements Serializable {
 
+    private int id;
     private int userId;
     private String username;
     private String title;
     private String description;
     private String address;
     private String contact;
-    private String price;
+    private double price;
     private double distance;
+    private String status;
 
-    public Listing(int newUserId, String newTitle, String newDescription, String newAddress, double newDistance,
-                   String newContact, String newPrice) {
+    public Listing(int newId, int newUserId, String newUsername, String newTitle, String newDescription, String newAddress, double newDistance,
+                   String newContact, double newPrice, String newStatus) {
 
-        userId = newUserId;
-        title = newTitle;
-        description = newDescription;
-        address = newAddress;
-        contact = newContact;
-        price = newPrice;
-        distance = newDistance;
-    }
-
-    public Listing(int newUserId, String newUsername, String newTitle, String newDescription, String newAddress, double newDistance,
-                   String newContact, String newPrice) {
-
+        id = newId;
         userId = newUserId;
         username = newUsername;
         title = newTitle;
@@ -38,8 +29,10 @@ public class Listing implements Serializable {
         contact = newContact;
         price = newPrice;
         distance = newDistance;
+        status = newStatus;
     }
 
+    public int getId() { return id; }
     public int getUserId() { return userId; }
     public String getUsername() { return username; }
     public String getTitle()
@@ -58,10 +51,11 @@ public class Listing implements Serializable {
     {
         return contact;
     }
-    public String getPrice()
+    public double getPrice()
     {
         return price;
     }
     public double getDistance() { return distance; }
+    public String getStatus() { return status; }
 
 }

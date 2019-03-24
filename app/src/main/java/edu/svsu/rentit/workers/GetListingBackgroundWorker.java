@@ -30,6 +30,8 @@ import edu.svsu.rentit.activities.MainActivity;
 import edu.svsu.rentit.R;
 import edu.svsu.rentit.ListingViewAdapter;
 
+import static java.lang.Float.parseFloat;
+
 
 public class GetListingBackgroundWorker extends AsyncTask<String, String, String> {
 
@@ -43,6 +45,10 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
 
     @Override
     protected String doInBackground(String... params) {
+
+        if (params.length == 1) {
+
+        }
 
         //
         HttpURLConnectionReader reader = new HttpURLConnectionReader("get_listing_geo.php");
@@ -70,17 +76,18 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
 
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject jb = jArray.getJSONObject(i);
+                int id = jb.getInt("id");
                 int userId = jb.getInt("userId");
                 String username = jb.getString("username");
                 String title = jb.getString("title");
                 String description = jb.getString("description");
-                String price = jb.getString("price");
+                double price = jb.getDouble("price");
+                String status = jb.getString("status");
                 double lat1 = jb.getDouble("lat");
                 double lon1 = jb.getDouble("lon");
 
                 double distance = distance(lat1,lon1,43.549014678840194,-83.95262718200684);
-
-                listings.add(new Listing(userId, username, title, description,  "", distance, "", "$" + price + ".00"));
+                listings.add(new Listing(id, userId, username, title, description,  "", distance, "", price, status));
             }
 
             // Send listing results back to MainActivity

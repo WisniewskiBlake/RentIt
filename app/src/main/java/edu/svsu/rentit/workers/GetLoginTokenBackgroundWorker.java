@@ -8,6 +8,8 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import edu.svsu.rentit.RentItApplication;
+import edu.svsu.rentit.activities.LoginActivity;
 import edu.svsu.rentit.activities.MainActivity;
 import edu.svsu.rentit.models.User;
 import edu.svsu.rentit.HttpURLConnectionReader;
@@ -30,6 +32,8 @@ public class GetLoginTokenBackgroundWorker extends AsyncTask<String, String, Str
         reader.addParam("userid", params[0]);
         reader.addParam("token", params[1]);
 
+        Log.d("DEBUG", "LOCAL TOKEN " + params[1]);
+
         try {
             return reader.getResponse();
 
@@ -50,15 +54,18 @@ public class GetLoginTokenBackgroundWorker extends AsyncTask<String, String, Str
 
             int success = response.getInt("success");
 
+            Log.d("DEBUG", "TOKEN SUCCESS " + String.valueOf(success));
+
             if (result != null && success == 1) {
 
                 JSONObject userJSONObject = response.getJSONObject("user");
                 User currentUser = new User(userJSONObject);
 
+                // Set Application User
+                ((RentItApplication) ((MainActivity)context).getApplication()).setUser(currentUser);
+
                 // Broadcast validated User to MainActivity
-                Intent intent = new Intent("loginSuccess");
-                intent.putExtra("USER", currentUser);
-                context.sendBroadcast(intent);
+                context.sendBroadcast(new Intent("loginSuccess"));
 
                 ((MainActivity)context).setUserValidated();
 

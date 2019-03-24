@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import edu.svsu.rentit.RentItApplication;
 import edu.svsu.rentit.activities.LoginActivity;
 import edu.svsu.rentit.HttpURLConnectionReader;
 import edu.svsu.rentit.models.User;
@@ -76,10 +77,11 @@ public class LoginBackgroundWorker extends AsyncTask<String, String, String> {
                 }
                 editor.commit();
 
+                // Set Application User
+                ((RentItApplication) ((LoginActivity)context).getApplication()).setUser(currentUser);
 
-                Intent intent = new Intent("loginSuccess");
-                intent.putExtra("USER",currentUser);
-                context.sendBroadcast(intent);
+                // Let MainActivity know login was successful
+                context.sendBroadcast(new Intent("loginSuccess"));
 
                 ((LoginActivity)context).finish();
 
