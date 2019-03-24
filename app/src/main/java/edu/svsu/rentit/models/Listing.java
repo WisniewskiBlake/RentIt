@@ -58,4 +58,9 @@ public class Listing implements Serializable {
     public double getDistance() { return distance; }
     public String getStatus() { return status; }
 
+    public void setTitle(String newTitle) { title = newTitle; }
+    public void setDescription(String newDescription) { description = newDescription; }
+    public void setPrice(double newPrice) { price = newPrice; }
+    public void setStatus(String newStatus) { status = newStatus; }
+
 }

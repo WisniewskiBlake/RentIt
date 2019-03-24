@@ -46,7 +46,7 @@ public class ListingViewHolder extends RecyclerView.ViewHolder implements View.O
         Context context = view.getContext();
         Intent intent = new Intent(context, ViewListingActivity.class);
 
-        intent.putExtra("LISTING", listing);
+        intent.putExtra("LISTING_ID", listing.getId());
 
         context.startActivity(intent);
     }

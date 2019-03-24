@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.RentItApplication;
+import edu.svsu.rentit.activities.LoginActivity;
 import edu.svsu.rentit.activities.UpdateListingActivity;
 
 public class UpdateListingBackgroundWorker extends AsyncTask<String, String, String> {

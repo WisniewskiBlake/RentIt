@@ -83,8 +83,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                listings = (ArrayList<Listing>)intent.getSerializableExtra("LISTINGS");
-
+                listings = ((RentItApplication) getApplication()).getListings();
                 updateListings(listings);
             }
         }, new IntentFilter("listingsGet"));
@@ -198,6 +197,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        if (((RentItApplication) getApplication()).hasListing()) {
+            updateListings(listings);
+        }
     }
 
     //filters the exampleFullList containing all entries based on query and returns

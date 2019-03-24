@@ -16,6 +16,7 @@ import edu.svsu.rentit.models.User;
 
 public class ViewListingActivity extends AppCompatActivity {
 
+    private int listingId;
     private Listing currentListing;
 
     TextView txt_Title;
@@ -39,8 +40,10 @@ public class ViewListingActivity extends AppCompatActivity {
         btn_Owner = findViewById(R.id.button_Owner);
 
 
-        if (getIntent().hasExtra("LISTING"))
-            currentListing = (Listing)getIntent().getSerializableExtra("LISTING");
+        if (getIntent().hasExtra("LISTING_ID")) {
+            listingId = getIntent().getIntExtra("LISTING_ID", -1);
+            currentListing = ((RentItApplication) getApplication()).getListingById(listingId);
+        }
 
         if (((RentItApplication) this.getApplication()).hasUser()) {
             User currentUser = ((RentItApplication) this.getApplication()).getUser();
@@ -80,17 +83,27 @@ public class ViewListingActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d("DEBUG", "VIEW LISTING RESUME " + currentListing.getPrice());
+        currentListing = ((RentItApplication) getApplication()).getListingById(listingId);
+        setOutput(currentListing);
+    }
+
+
     public void setOutput(Listing listing)
     {
         txt_Title.setText(listing.getTitle());
         txt_Description.setText(listing.getDescription());
-        txt_Price.setText("$" + listing.getPrice());
+        txt_Price.setText("$" + String.format("%.2f", listing.getPrice()));
     }
 
     public void setOutput(String title, String description, String price)
     {
         txt_Title.setText(title);
         txt_Description.setText(description);
-        txt_Price.setText("$" + price);
+        txt_Price.setText("$" + String.format("%.2f", price));
     }
 }

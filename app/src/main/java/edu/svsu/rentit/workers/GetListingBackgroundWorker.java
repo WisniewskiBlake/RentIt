@@ -25,6 +25,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.RentItApplication;
+import edu.svsu.rentit.activities.LoginActivity;
 import edu.svsu.rentit.models.Listing;
 import edu.svsu.rentit.activities.MainActivity;
 import edu.svsu.rentit.R;
@@ -87,13 +89,15 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
                 double lon1 = jb.getDouble("lon");
 
                 double distance = distance(lat1,lon1,43.549014678840194,-83.95262718200684);
+
                 listings.add(new Listing(id, userId, username, title, description,  "", distance, "", price, status));
             }
 
+            //
+            ((RentItApplication) ((MainActivity)context).getApplication()).setListings(listings);
+
             // Send listing results back to MainActivity
-            Intent intent = new Intent("listingsGet");
-            intent.putExtra("LISTINGS",listings);
-            context.sendBroadcast(intent);
+            context.sendBroadcast(new Intent("listingsGet"));
 
 
 

@@ -52,7 +52,7 @@ public class ProfileBackgroundWorker extends AsyncTask<String, String, String> {
             String last = response.getString("last");
             String bio = response.getString("bio");
 
-            ((ProfileActivity)context).setOutput(first + " " + last, bio);
+            ((ProfileActivity)context).setOutput(first, bio);
 
         } catch (Exception e) {
 

@@ -30,6 +30,8 @@ public class RemoveListingBackgroundWorker extends AsyncTask<String, String, Str
         try {
             response = reader.getResponse();
 
+
+
             return response;
 
         } catch (Exception e) {

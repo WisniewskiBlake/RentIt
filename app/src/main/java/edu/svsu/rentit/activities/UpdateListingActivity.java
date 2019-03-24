@@ -2,14 +2,18 @@ package edu.svsu.rentit.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import edu.svsu.rentit.R;
+import edu.svsu.rentit.RentItApplication;
 import edu.svsu.rentit.models.Listing;
 import edu.svsu.rentit.workers.RemoveListingBackgroundWorker;
 import edu.svsu.rentit.workers.UpdateListingBackgroundWorker;
+
+import static java.lang.Double.parseDouble;
 
 public class UpdateListingActivity extends AppCompatActivity {
 
@@ -17,8 +21,6 @@ public class UpdateListingActivity extends AppCompatActivity {
 
     EditText txt_title, txt_description, txt_price;
     Button btn_remove, btn_save;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +54,20 @@ public class UpdateListingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // Grab updated values
                 String title = txt_title.getText().toString();
                 String description = txt_description.getText().toString();
                 String price = txt_price.getText().toString();
 
+                // This should happen after successful response - TODO
+                currentListing.setTitle(title);
+                currentListing.setDescription(description);
+                currentListing.setPrice(parseDouble(price));
+
+                // Update local listing in array
+                ((RentItApplication)getApplication()).updateListing(currentListing);
+
+                // Update remote listing in database
                 UpdateListingBackgroundWorker listingWorker = new UpdateListingBackgroundWorker(UpdateListingActivity.this);
                 listingWorker.execute(String.valueOf(currentListing.getId()), title, description, price);
 

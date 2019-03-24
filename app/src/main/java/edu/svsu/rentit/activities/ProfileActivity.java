@@ -20,32 +20,24 @@ public class ProfileActivity extends AppCompatActivity {
 
     User currentUser;
 
+    Toolbar toolbar;
     TextView txt_Name;
     TextView txt_Bio;
-
-    Button btn_ViewListing;
-    Button btn_CreateListing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("RentIT - Profile");
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         txt_Name = findViewById(R.id.tv_Profilename);
         txt_Bio = findViewById(R.id.textView_bio);
-        btn_ViewListing = findViewById(R.id.btn_ViewListings);
-        btn_CreateListing = findViewById(R.id.btn_CreateListing);
 
         // Grab User object from Intent
         if (getIntent().hasExtra("CURRENT_USER")) {
             currentUser = (User)getIntent().getSerializableExtra("CURRENT_USER");
-        } else {
-            // Hide controls if this is not current logged in user
-            btn_ViewListing.setVisibility(View.INVISIBLE);
-            btn_CreateListing.setVisibility(View.INVISIBLE);
+            setUser(currentUser);
         }
 
         if (getIntent().hasExtra("USER_ID")) {
@@ -54,31 +46,17 @@ public class ProfileActivity extends AppCompatActivity {
             profileWorker.execute(getIntent().getStringExtra("USER_ID"));
         }
 
-        // Set UI values
-        if (currentUser != null) {
-            setUser(currentUser);
-        }
 
-
-        Button btnView = findViewById(R.id.btn_ViewListings);
-        btnView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-
-                startActivity(new Intent(ProfileActivity.this, ViewListingActivity.class));
-
-            }
-        });
     }
 
     public void setUser(User outputUser)
     {
-        txt_Name.setText(outputUser.getFirstname() + " " + outputUser.getLastname());
-        txt_Bio.setText(outputUser.getBio());
+        setOutput(outputUser.getFirstname(), outputUser.getBio());
     }
 
     public void setOutput(String name, String bio)
     {
+        toolbar.setTitle(name + "'s Profile");
         txt_Name.setText(name);
         txt_Bio.setText(bio);
     }
