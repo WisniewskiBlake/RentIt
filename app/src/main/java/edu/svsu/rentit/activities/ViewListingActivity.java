@@ -1,13 +1,20 @@
 package edu.svsu.rentit.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.InputStream;
+import java.net.URL;
 
 import edu.svsu.rentit.R;
 import edu.svsu.rentit.RentItApplication;
@@ -76,7 +83,7 @@ public class ViewListingActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(ViewListingActivity.this, UpdateListingActivity.class);
-                intent.putExtra("LISTING", currentListing);
+                intent.putExtra("LISTING_ID", currentListing.getId());
                 startActivity(intent);
 
             }
@@ -84,12 +91,12 @@ public class ViewListingActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume()
+    protected void onResume()
     {
         super.onResume();
-        Log.d("DEBUG", "VIEW LISTING RESUME " + currentListing.getPrice());
-        currentListing = ((RentItApplication) getApplication()).getListingById(listingId);
-        setOutput(currentListing);
+
+        // Finish activity if listing has been removed
+        if (currentListing.getStatus().equals("inactive")) finish();
     }
 
 

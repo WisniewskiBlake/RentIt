@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import edu.svsu.rentit.RentItApplication;
+import edu.svsu.rentit.models.Listing;
 import edu.svsu.rentit.models.User;
 import edu.svsu.rentit.workers.CreateListingBackgroundWorker;
 import edu.svsu.rentit.R;
@@ -56,11 +58,11 @@ public class CreateListingActivity extends AppCompatActivity {
 
                 address = address + ", " + city + ", " + state + " " + zip + ", " + country;
 
+
+                // Update remote
                 CreateListingBackgroundWorker listingWorker = new CreateListingBackgroundWorker(CreateListingActivity.this);
                 listingWorker.execute(currentUser.getIdString(), title, description, address, contact, price);
 
-                // Close activity
-                finish();
             }
         });
 

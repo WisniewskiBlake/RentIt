@@ -83,29 +83,15 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+
+                // Grab listings from local store
                 listings = ((RentItApplication) getApplication()).getListings();
+
+                // Update RecyclerView
                 updateListings(listings);
             }
         }, new IntentFilter("listingsGet"));
 
-    }
-
-    private void updateListings(ArrayList<Listing> newListings)
-    {
-        // Only display active listings in MainActivity
-        ArrayList<Listing> activeListings = new ArrayList<>();
-        for (Listing l : newListings) {
-
-            if (!l.getStatus().equals("inactive")) {
-                activeListings.add(l);
-            }
-        }
-
-        RecyclerView recyclerView = findViewById(R.id.listing_recycler);
-        ListingViewAdapter adapter = new ListingViewAdapter(activeListings, MainActivity.this);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
 
     @Override
@@ -167,17 +153,9 @@ public class MainActivity extends AppCompatActivity {
         }else if(id == R.id.action_login) {
             startActivity(new Intent(this, LoginActivity.class));
         } else if (id == R.id.action_manage) {
+
             Intent intent = new Intent(this, ManageListingsActivity.class);
-
-            ArrayList<Listing> userListings = new ArrayList<Listing>();
-            for (Listing listing : listings) {
-                if (listing.getUserId() == currentUser.getId())
-                    userListings.add(listing);
-            }
-
             intent.putExtra("USER", currentUser);
-            intent.putExtra("USER_LISTINGS", userListings);
-
             startActivity(intent);
 
         } else if (id == R.id.action_logout) {
@@ -209,6 +187,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void updateListings(ArrayList<Listing> newListings)
+    {
+        // Only display active listings in MainActivity
+        ArrayList<Listing> activeListings = new ArrayList<>();
+        for (Listing l : newListings) {
+
+            if (!l.getStatus().equals("inactive")) {
+                activeListings.add(l);
+            }
+        }
+
+        RecyclerView recyclerView = findViewById(R.id.listing_recycler);
+        ListingViewAdapter adapter = new ListingViewAdapter(activeListings, MainActivity.this);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+    }
+
     //filters the exampleFullList containing all entries based on query and returns
     //the results which then populate the exampleList
     //@Override
@@ -220,9 +216,9 @@ public class MainActivity extends AppCompatActivity {
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<Listing> filteredList = new ArrayList<>();
 
-            if(constraint == null || constraint.length() == 0){
+            if (constraint == null || constraint.length() == 0){
                 filteredList.addAll(listings);
-            }else{
+            } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for(Listing item : listings){
                     if(item.getTitle().toLowerCase().contains(filterPattern)){
@@ -240,13 +236,6 @@ public class MainActivity extends AppCompatActivity {
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
             updateListings((ArrayList)results.values);
-            /*
-            exampleList.clear();
-            exampleList.addAll((List)results.values);
-            adapter = new ListingViewAdapter(exampleList, MainActivity.this);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            */
         }
     };
 

@@ -52,7 +52,11 @@ public class RentItApplication extends Application {
 
     public void setListings(ArrayList<Listing> newListings) { currentListings = newListings; }
 
-    public void addListing(Listing newListing) { currentListings.add(newListing); }
+    public void addListing(Listing newListing) {
+        Log.d("DEBUG", "BEFORE " + currentListings.size());
+        currentListings.add(newListing);
+        Log.d("DEBUG", "AFTER " + currentListings.size());
+    }
 
     public void updateListing(Listing updatedListing) {
         for (int i = 0; i < currentListings.size(); i++) {
@@ -61,7 +65,14 @@ public class RentItApplication extends Application {
         }
     }
 
-    public void removeListingById(int id) {
-
+    public void removeListingById(int id)
+    {
+        boolean found = false;
+        for (int i = 0; i < currentListings.size() && !found; i++) {
+            if (currentListings.get(i).getId() == id) {
+                found = true;
+                currentListings.get(i).setStatus("inactive");
+            }
+        }
     }
 }

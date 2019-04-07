@@ -53,7 +53,7 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
         }
 
         //
-        HttpURLConnectionReader reader = new HttpURLConnectionReader("get_listing_geo.php");
+        HttpURLConnectionReader reader = new HttpURLConnectionReader("get_listing_geo_img.php");
 
         String response;
         try {
@@ -83,20 +83,21 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
                 String username = jb.getString("username");
                 String title = jb.getString("title");
                 String description = jb.getString("description");
+                String address = jb.getString("address");
+                String contact = jb.getString("contact");
                 double price = jb.getDouble("price");
                 String status = jb.getString("status");
                 double lat1 = jb.getDouble("lat");
                 double lon1 = jb.getDouble("lon");
 
-                double distance = distance(lat1,lon1,43.549014678840194,-83.95262718200684);
 
-                listings.add(new Listing(id, userId, username, title, description,  "", distance, "", price, status));
+                listings.add(new Listing(id, userId, username, title, description,  address, lat1, lon1, contact, price, status));
             }
 
-            //
+            // Create local store of listings
             ((RentItApplication) ((MainActivity)context).getApplication()).setListings(listings);
 
-            // Send listing results back to MainActivity
+            // Notify MainActivity that listings are available
             context.sendBroadcast(new Intent("listingsGet"));
 
 
@@ -109,24 +110,4 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
 
     }
 
-    /** calculates the distance between two locations in MILES */
-    private double distance(double lat1, double lng1, double lat2, double lng2) {
-
-        double earthRadius = 3958.75; // in miles, change to 6371 for kilometer output
-
-        double dLat = Math.toRadians(lat2-lat1);
-        double dLng = Math.toRadians(lng2-lng1);
-
-        double sindLat = Math.sin(dLat / 2);
-        double sindLng = Math.sin(dLng / 2);
-
-        double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
-                * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
-
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-        double dist = earthRadius * c;
-
-        return dist; // output distance, in MILES
-    }
 }
