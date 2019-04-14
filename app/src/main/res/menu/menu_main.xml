@@ -20,6 +20,9 @@
         android:id="@+id/action_manage"
         android:title="Manage Listings" />
     <item
+        android:id="@+id/action_users"
+        android:title="Manage Users" />
+    <item
         android:id="@+id/action_view_profile"
         android:orderInCategory="104"
         android:title="@string/action_view_profile"
