@@ -2,12 +2,11 @@ package edu.svsu.rentit.workers;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.location.Location;
+import android.content.Intent;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.PrecomputedText;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -26,32 +25,35 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.RentItApplication;
+import edu.svsu.rentit.activities.LoginActivity;
 import edu.svsu.rentit.models.Listing;
 import edu.svsu.rentit.activities.MainActivity;
 import edu.svsu.rentit.R;
 import edu.svsu.rentit.ListingViewAdapter;
 
+import static java.lang.Float.parseFloat;
 
-public class GetListingBackgroundWorker extends AsyncTask<GetLocationBackgroundWorker, String, String> {
+
+public class GetListingBackgroundWorker extends AsyncTask<String, String, String> {
 
     Context context;
     AlertDialog alertDialog;
 
-    double lati = 0.0;
-    double longi = 0.0;
 
     public GetListingBackgroundWorker(Context ctx) {
         context = ctx;
     }
 
     @Override
-    protected String doInBackground(GetLocationBackgroundWorker... params) {
-        GetLocationBackgroundWorker locationWorker = params[0];
-        //
-        HttpURLConnectionReader reader = new HttpURLConnectionReader("get_listing_geo.php");
+    protected String doInBackground(String... params) {
 
-        lati = locationWorker.getLati();
-        longi = locationWorker.getLongi();
+        if (params.length == 1) {
+
+        }
+
+        //
+        HttpURLConnectionReader reader = new HttpURLConnectionReader("get_listing_geo_img.php");
 
         String response;
         try {
@@ -76,51 +78,36 @@ public class GetListingBackgroundWorker extends AsyncTask<GetLocationBackgroundW
 
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject jb = jArray.getJSONObject(i);
+                int id = jb.getInt("id");
+                int userId = jb.getInt("userId");
+                String username = jb.getString("username");
                 String title = jb.getString("title");
                 String description = jb.getString("description");
-                String price = jb.getString("price");
+                String address = jb.getString("address");
+                String contact = jb.getString("contact");
+                double price = jb.getDouble("price");
+                String status = jb.getString("status");
                 double lat1 = jb.getDouble("lat");
                 double lon1 = jb.getDouble("lon");
 
-                double distance = distance(lat1,lon1,lati,longi);
 
-                listings.add(new Listing(title, description,  "", distance, "", "$" + price + ".00"));
+                listings.add(new Listing(id, userId, username, title, description,  address, lat1, lon1, contact, price, status));
             }
 
+            // Create local store of listings
+            ((RentItApplication) ((MainActivity)context).getApplication()).setListings(listings);
 
-            RecyclerView recyclerView = (RecyclerView) ((MainActivity)context).findViewById(R.id.listing_recycler);
-            ListingViewAdapter adapter = new ListingViewAdapter(listings, context);
-
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            // Notify MainActivity that listings are available
+            context.sendBroadcast(new Intent("listingsGet"));
 
 
 
         } catch (Exception e) {
+            e.printStackTrace();
             Log.d("DEBUG", "Exeption: " + e.toString());
         }
 
 
     }
 
-    /** calculates the distance between two locations in MILES */
-    private double distance(double lat1, double lng1, double lat2, double lng2) {
-
-        double earthRadius = 3958.75; // in miles, change to 6371 for kilometer output
-
-        double dLat = Math.toRadians(lat2-lat1);
-        double dLng = Math.toRadians(lng2-lng1);
-
-        double sindLat = Math.sin(dLat / 2);
-        double sindLng = Math.sin(dLng / 2);
-
-        double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
-                * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
-
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-        double dist = earthRadius * c;
-
-        return dist; // output distance, in MILES
-    }
 }

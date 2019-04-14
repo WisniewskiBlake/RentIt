@@ -2,31 +2,23 @@ package edu.svsu.rentit.workers;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-
 import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.RentItApplication;
+import edu.svsu.rentit.activities.CreateListingActivity;
+import edu.svsu.rentit.activities.UpdateListingActivity;
+import edu.svsu.rentit.models.Listing;
 
 public class CreateListingBackgroundWorker extends AsyncTask<String, String, String> {
 
     Context context;
-    AlertDialog alertDialog;
 
+    private String userId, title, description, address, contact, price, image, name;
 
     public CreateListingBackgroundWorker(Context ctx) {
         context = ctx;
@@ -36,14 +28,25 @@ public class CreateListingBackgroundWorker extends AsyncTask<String, String, Str
     protected String doInBackground(String... params) {
 
         //
-        HttpURLConnectionReader reader = new HttpURLConnectionReader("create_listing_geo.php");
+        HttpURLConnectionReader reader = new HttpURLConnectionReader("create_listing.php");
 
-        reader.addParam("userid", params[0]);
-        reader.addParam("title", params[1]);
-        reader.addParam("description", params[2]);
-        reader.addParam("address", params[3]);
-        reader.addParam("contact", params[4]);
-        reader.addParam("price", params[5]);
+        userId = params[0];
+        title = params[1];
+        description = params[2];
+        address = params[3];
+        contact = params[4];
+        price = params[5];
+        image = params[6];
+        name = params[7];
+
+        reader.addParam("userid", userId);
+        reader.addParam("title", title);
+        reader.addParam("description", description);
+        reader.addParam("address", address);
+        reader.addParam("contact", contact);
+        reader.addParam("price", price);
+        reader.addParam("image", image);
+        reader.addParam("name", name);
 
         String response;
         try {
@@ -60,6 +63,16 @@ public class CreateListingBackgroundWorker extends AsyncTask<String, String, Str
     protected void onPostExecute(String result) {
 
         try {
+
+            JSONObject json = new JSONObject(result);
+            int listingId = json.getInt("listingid");
+            String username = json.getString("username");
+            double lat = json.getInt("lat");
+            double lon = json.getInt("lon");
+
+            ((RentItApplication)((CreateListingActivity)context).getApplication()).addListing(new Listing(listingId, Integer.parseInt(userId), username, title, description, address, lat, lon, contact, Double.parseDouble(price), ""));
+
+            ((CreateListingActivity)context).finish();
             /*
             JSONObject response = new JSONObject(result);
 
@@ -79,7 +92,7 @@ public class CreateListingBackgroundWorker extends AsyncTask<String, String, Str
             //}
 
         } catch (Exception e) {
-
+            Log.d("DEBUG", "CREATE LISTING " + e.toString());
         }
 
 
