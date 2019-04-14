@@ -18,7 +18,7 @@ public class CreateListingBackgroundWorker extends AsyncTask<String, String, Str
 
     Context context;
 
-    private String userId, title, description, address, contact, price;
+    private String userId, title, description, address, contact, price, image, name;
 
     public CreateListingBackgroundWorker(Context ctx) {
         context = ctx;
@@ -28,7 +28,7 @@ public class CreateListingBackgroundWorker extends AsyncTask<String, String, Str
     protected String doInBackground(String... params) {
 
         //
-        HttpURLConnectionReader reader = new HttpURLConnectionReader("create_listing_geo.php");
+        HttpURLConnectionReader reader = new HttpURLConnectionReader("create_listing.php");
 
         userId = params[0];
         title = params[1];
@@ -36,6 +36,8 @@ public class CreateListingBackgroundWorker extends AsyncTask<String, String, Str
         address = params[3];
         contact = params[4];
         price = params[5];
+        image = params[6];
+        name = params[7];
 
         reader.addParam("userid", userId);
         reader.addParam("title", title);
@@ -43,6 +45,8 @@ public class CreateListingBackgroundWorker extends AsyncTask<String, String, Str
         reader.addParam("address", address);
         reader.addParam("contact", contact);
         reader.addParam("price", price);
+        reader.addParam("image", image);
+        reader.addParam("name", name);
 
         String response;
         try {
