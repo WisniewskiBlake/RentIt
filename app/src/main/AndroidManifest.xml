@@ -45,6 +45,7 @@
         <activity android:name=".activities.ViewListingActivity" />
         <activity android:name=".activities.ManageListingsActivity" />
         <activity android:name=".activities.UpdateListingActivity"></activity>
+        <activity android:name=".activities.ContactActivity"/>
     </application>
 
 </manifest>

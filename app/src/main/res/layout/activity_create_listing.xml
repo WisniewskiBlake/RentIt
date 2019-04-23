@@ -9,44 +9,47 @@
     <Spinner
         android:id="@+id/spinner_State"
         android:layout_width="115dp"
-        android:layout_height="0dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginLeft="43dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
         android:entries="@array/state"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_City"
-        app:layout_constraintEnd_toEndOf="@+id/txt_Zip"
-        app:layout_constraintStart_toStartOf="@+id/txt_Zip"
-        app:layout_constraintTop_toTopOf="@+id/txt_City" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/txt_City"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txt_Zip" />
 
     <EditText
         android:id="@+id/txt_Zip"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="244dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
         android:ems="10"
         android:hint="Zip Code"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner_Country"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/editText"
+        app:layout_constraintStart_toEndOf="@+id/btn_Cancel"
+        app:layout_constraintTop_toBottomOf="@+id/txt_City" />
 
     <EditText
         android:id="@+id/txt_City"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="9dp"
         android:layout_marginEnd="14dp"
         android:layout_marginRight="14dp"
-        android:layout_marginBottom="7dp"
         android:ems="10"
         android:hint="City"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/txt_Zip"
         app:layout_constraintEnd_toStartOf="@+id/spinner_State"
-        app:layout_constraintStart_toStartOf="@+id/spinner_Country" />
+        app:layout_constraintStart_toStartOf="@+id/txt_Price"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Address" />
 
     <EditText
         android:id="@+id/txt_Title"
@@ -70,43 +73,46 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="9dp"
         android:ems="10"
         android:hint="Address"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/txt_City"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Description" />
 
     <EditText
         android:id="@+id/txt_Price"
-        android:layout_width="104dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="21dp"
         android:ems="10"
         android:hint="Price"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_Country" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_selectImage"
+        app:layout_constraintEnd_toEndOf="@+id/btn_selectImage"
+        app:layout_constraintStart_toStartOf="@+id/btn_selectImage" />
 
     <EditText
         android:id="@+id/txt_Contact"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
         android:ems="10"
         android:hint="Contact"
         android:inputType="phone"
         app:layout_constraintBaseline_toBaselineOf="@+id/txt_Price"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txt_Price" />
+        app:layout_constraintStart_toEndOf="@+id/btn_selectImage" />
 
     <EditText
         android:id="@+id/txt_Description"
@@ -114,56 +120,40 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="Description"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/txt_Address"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_Title" />
 
     <Button
         android:id="@+id/btn_Create"
-        android:layout_width="106dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="77dp"
-        android:layout_marginLeft="77dp"
-        android:layout_marginEnd="77dp"
-        android:layout_marginRight="77dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
         android:layout_marginBottom="8dp"
         android:text="Create"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/txt_Zip"
-        app:layout_constraintStart_toStartOf="@+id/txt_Contact" />
+        app:layout_constraintEnd_toEndOf="@+id/spinner_State"
+        app:layout_constraintStart_toStartOf="@+id/txt_Zip" />
 
     <Button
         android:id="@+id/btn_Cancel"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="14dp"
-        android:layout_marginRight="14dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
         android:layout_marginBottom="8dp"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/name" />
-
-    <ImageView
-        android:id="@id/imageView"
-        android:layout_width="74dp"
-        android:layout_height="77dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="205dp"
-        android:layout_marginEnd="27dp"
-        android:layout_marginRight="27dp"
-        android:layout_marginBottom="206dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btn_selectImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/spinner_Country" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_selectImage"
@@ -177,28 +167,29 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="18dp"
         android:ems="10"
-        android:enabled="true"
+        android:enabled="false"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Create"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Cancel"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Spinner
         android:id="@+id/spinner_Country"
-        android:layout_width="152dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="6dp"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:entries="@array/country"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_Zip"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_City" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/txt_Zip"
+        app:layout_constraintEnd_toStartOf="@+id/txt_Zip"
+        app:layout_constraintStart_toStartOf="@+id/txt_Price" />
 
 </android.support.constraint.ConstraintLayout>

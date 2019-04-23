@@ -2,22 +2,12 @@ package edu.svsu.rentit.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import edu.svsu.rentit.RentItApplication;
 import edu.svsu.rentit.models.Listing;
@@ -25,16 +15,9 @@ import edu.svsu.rentit.models.User;
 import edu.svsu.rentit.workers.CreateListingBackgroundWorker;
 import edu.svsu.rentit.R;
 
-public class CreateListingActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreateListingActivity extends AppCompatActivity {
 
     User currentUser;
-    private Bitmap bitmap;
-    private String bitmap_string = null;
-    private final int IMG_REQUEST = 1;
-    private Button btnSelectImage;
-    private EditText name;
-    private String image_name = null;
-    private ImageView imgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +26,9 @@ public class CreateListingActivity extends AppCompatActivity implements View.OnC
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolbar.setTitle("RentIT - Create Listing");
         //setSupportActionBar(toolbar);
-        name = findViewById(R.id.name);
-        imgView = findViewById(R.id.imageView);
+
         currentUser = (User)getIntent().getSerializableExtra("USER");
 
-        btnSelectImage = findViewById(R.id.btn_selectImage);
-        btnSelectImage.setOnClickListener(this);
 
         Button btnCreate = findViewById(R.id.btn_Create);
         btnCreate.setOnClickListener(new View.OnClickListener(){
@@ -78,11 +58,21 @@ public class CreateListingActivity extends AppCompatActivity implements View.OnC
 
                 address = address + ", " + city + ", " + state + " " + zip + ", " + country;
 
-                if(bitmap_string != null && image_name != null) {
-                    // Update remote
-                    CreateListingBackgroundWorker listingWorker = new CreateListingBackgroundWorker(CreateListingActivity.this);
-                    listingWorker.execute(currentUser.getIdString(), title, description, address, contact, price, bitmap_string, image_name);
-                }
+
+                // Update remote
+                CreateListingBackgroundWorker listingWorker = new CreateListingBackgroundWorker(CreateListingActivity.this);
+                listingWorker.execute(currentUser.getIdString(), title, description, address, contact, price);
+
+            }
+        });
+
+        Button btnSelectImage = findViewById(R.id.btn_selectImage);
+        btnSelectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Context context = v.getContext();
+                //Intent intent = new Intent(context, ImageUploadActivity.class);
+                //context.startActivity(intent);
             }
         });
 
@@ -94,68 +84,6 @@ public class CreateListingActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.btn_selectImage:
-                selectImage();
-                break;
-        }
-    }
-
-    private void selectImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, IMG_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null) {
-            Uri path = data.getData();
-            image_name = getFileName(path);
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),path);
-                imgView.setImageBitmap(bitmap);
-                name.setText(image_name);
-                bitmap_string = imageToString(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private String getFileName(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        if (result == null) {
-            result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-            if (cut != -1) {
-                result = result.substring(cut + 1);
-            }
-        }
-        return result;
-    }
-
-    private String imageToString(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-        byte[] imgBytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imgBytes,Base64.DEFAULT);
     }
 
 }
