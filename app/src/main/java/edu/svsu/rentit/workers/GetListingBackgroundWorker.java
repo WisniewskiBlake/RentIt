@@ -53,7 +53,7 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
         }
 
         //
-        HttpURLConnectionReader reader = new HttpURLConnectionReader("get_listing_geo_img.php");
+        HttpURLConnectionReader reader = new HttpURLConnectionReader("get_listing.php");
 
         String response;
         try {
@@ -89,9 +89,10 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
                 String status = jb.getString("status");
                 double lat1 = jb.getDouble("lat");
                 double lon1 = jb.getDouble("lon");
+                String img = jb.getString("image");
 
 
-                listings.add(new Listing(id, userId, username, title, description,  address, lat1, lon1, contact, price, status));
+                listings.add(new Listing(id, userId, username, title, description,  address, lat1, lon1, contact, price, status, img));
             }
 
             // Create local store of listings

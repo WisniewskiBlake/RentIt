@@ -6,7 +6,7 @@
     android:layout_height="100dp">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/img_view"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="16dp"
@@ -30,7 +30,7 @@
         android:layout_marginTop="10dp"
         android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/img_view"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -41,7 +41,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="1dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/img_view"
         app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
     <TextView
@@ -51,7 +51,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/img_view"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
@@ -63,6 +63,6 @@
         android:layout_marginRight="17dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/img_view"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

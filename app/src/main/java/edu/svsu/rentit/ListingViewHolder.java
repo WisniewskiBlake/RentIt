@@ -2,10 +2,14 @@ package edu.svsu.rentit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.LocationManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import edu.svsu.rentit.activities.RegisterActivity;
@@ -20,6 +24,7 @@ public class ListingViewHolder extends RecyclerView.ViewHolder implements View.O
     private TextView description;
     private TextView price;
     private TextView distance;
+    private ImageView image;
 
     public ListingViewHolder(View view) {
         super(view);
@@ -29,6 +34,7 @@ public class ListingViewHolder extends RecyclerView.ViewHolder implements View.O
         description =  view.findViewById(R.id.textView2);
         price =  view.findViewById(R.id.textView3);
         distance =  view.findViewById(R.id.distance_view);
+        image =  view.findViewById(R.id.img_view);
     }
 
     public void setModel(Listing newListing) {
@@ -38,6 +44,12 @@ public class ListingViewHolder extends RecyclerView.ViewHolder implements View.O
         description.setText(listing.getDescription());
         price.setText(String.format("$%.2f", listing.getPrice()));
         distance.setText(String.format("%.2f", listing.getDistance()) + " mi.");
+        String list_image = listing.getImage();
+        if(list_image != null) {
+            byte[] imageBytes = Base64.decode(list_image, Base64.DEFAULT);
+            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            image.setImageBitmap(decodedImage);
+        }
     }
 
     @Override

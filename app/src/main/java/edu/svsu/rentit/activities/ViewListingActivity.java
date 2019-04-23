@@ -7,6 +7,7 @@ import android.media.Image;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,7 @@ public class ViewListingActivity extends AppCompatActivity {
 
     FloatingActionButton btn_Edit;
     Button btn_Owner;
+    ImageView img_Main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class ViewListingActivity extends AppCompatActivity {
 
         btn_Edit = findViewById(R.id.button_update);
         btn_Owner = findViewById(R.id.button_Owner);
+        img_Main = findViewById(R.id.img_Main);
 
 
         if (getIntent().hasExtra("LISTING_ID")) {
@@ -105,6 +108,12 @@ public class ViewListingActivity extends AppCompatActivity {
         txt_Title.setText(listing.getTitle());
         txt_Description.setText(listing.getDescription());
         txt_Price.setText("$" + String.format("%.2f", listing.getPrice()));
+        String list_image = listing.getImage();
+        if(list_image != null) {
+            byte[] imageBytes = Base64.decode(list_image, Base64.DEFAULT);
+            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            img_Main.setImageBitmap(decodedImage);
+        }
     }
 
     public void setOutput(String title, String description, String price)

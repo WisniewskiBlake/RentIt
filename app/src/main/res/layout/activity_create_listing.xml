@@ -150,7 +150,7 @@
         app:layout_constraintEnd_toStartOf="@+id/name" />
 
     <ImageView
-        android:id="@id/imageView"
+        android:id="@id/img_view"
         android:layout_width="74dp"
         android:layout_height="77dp"
         android:layout_centerHorizontal="true"

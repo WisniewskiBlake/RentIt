@@ -1,6 +1,5 @@
 package edu.svsu.rentit.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -19,8 +18,6 @@ import android.widget.Spinner;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import edu.svsu.rentit.RentItApplication;
-import edu.svsu.rentit.models.Listing;
 import edu.svsu.rentit.models.User;
 import edu.svsu.rentit.workers.CreateListingBackgroundWorker;
 import edu.svsu.rentit.R;
@@ -44,7 +41,7 @@ public class CreateListingActivity extends AppCompatActivity implements View.OnC
         //toolbar.setTitle("RentIT - Create Listing");
         //setSupportActionBar(toolbar);
         name = findViewById(R.id.name);
-        imgView = findViewById(R.id.imageView);
+        imgView = findViewById(R.id.img_view);
         currentUser = (User)getIntent().getSerializableExtra("USER");
 
         btnSelectImage = findViewById(R.id.btn_selectImage);

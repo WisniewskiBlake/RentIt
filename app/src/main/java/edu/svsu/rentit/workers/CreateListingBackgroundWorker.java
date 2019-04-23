@@ -70,7 +70,7 @@ public class CreateListingBackgroundWorker extends AsyncTask<String, String, Str
             double lat = json.getInt("lat");
             double lon = json.getInt("lon");
 
-            ((RentItApplication)((CreateListingActivity)context).getApplication()).addListing(new Listing(listingId, Integer.parseInt(userId), username, title, description, address, lat, lon, contact, Double.parseDouble(price), ""));
+            ((RentItApplication)((CreateListingActivity)context).getApplication()).addListing(new Listing(listingId, Integer.parseInt(userId), username, title, description, address, lat, lon, contact, Double.parseDouble(price), "", ""));
 
             ((CreateListingActivity)context).finish();
             /*

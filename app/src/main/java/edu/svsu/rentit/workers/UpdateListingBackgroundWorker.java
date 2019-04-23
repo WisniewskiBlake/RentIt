@@ -29,7 +29,7 @@ public class UpdateListingBackgroundWorker extends AsyncTask<String, String, Str
     protected String doInBackground(String... params) {
 
         //
-        HttpURLConnectionReader reader = new HttpURLConnectionReader("update_listing_geo.php");
+        HttpURLConnectionReader reader = new HttpURLConnectionReader("update_listing.php");
 
         //currentListing.getId()), title, description, address, contact, price);
         listingId = params[0];
@@ -39,6 +39,10 @@ public class UpdateListingBackgroundWorker extends AsyncTask<String, String, Str
         reader.addParam("address", params[3]);
         reader.addParam("contact", params[4]);
         reader.addParam("price", params[5]);
+        if(params[6] != null) {
+            reader.addParam("image", params[6]);
+            reader.addParam("name", params[7]);
+        }
 
         String response;
         try {
