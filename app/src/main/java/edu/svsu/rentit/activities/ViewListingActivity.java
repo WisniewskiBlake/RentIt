@@ -32,6 +32,7 @@ public class ViewListingActivity extends AppCompatActivity {
 
     FloatingActionButton btn_Edit;
     Button btn_Owner;
+    Button btn_request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class ViewListingActivity extends AppCompatActivity {
 
         btn_Edit = findViewById(R.id.button_update);
         btn_Owner = findViewById(R.id.button_Owner);
-
+        btn_request = findViewById(R.id.button_request);
 
         if (getIntent().hasExtra("LISTING_ID")) {
             listingId = getIntent().getIntExtra("LISTING_ID", -1);
@@ -86,6 +87,16 @@ public class ViewListingActivity extends AppCompatActivity {
                 intent.putExtra("LISTING_ID", currentListing.getId());
                 startActivity(intent);
 
+            }
+        });
+
+        btn_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewListingActivity.this, ContactActivity.class);
+                intent.putExtra("User_name", String.valueOf(currentListing.getUsername()));
+                intent.putExtra("Subject_name", String.valueOf(currentListing.getTitle()));
+                startActivity(intent);
             }
         });
     }
