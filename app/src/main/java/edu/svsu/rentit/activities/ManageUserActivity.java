@@ -3,10 +3,15 @@ package edu.svsu.rentit.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.svsu.rentit.R;
 import edu.svsu.rentit.models.User;
+import edu.svsu.rentit.workers.LoginBackgroundWorker;
 import edu.svsu.rentit.workers.ProfileBackgroundWorker;
 
 public class ManageUserActivity extends AppCompatActivity {
@@ -22,6 +27,8 @@ public class ManageUserActivity extends AppCompatActivity {
 
     TextView txt_Review;
     TextView txt_Reports;
+
+    Button disableButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +54,20 @@ public class ManageUserActivity extends AppCompatActivity {
             setUser(user);
         }
 
+        disableButton = findViewById(R.id.disableButton);
+        disableButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
 
+                Toast toast = Toast.makeText(ManageUserActivity.this,
+                        user.getUsername() + " has been disabled",
+                        Toast.LENGTH_SHORT);
+
+                toast.show();
+
+                finish();
+            }
+        });
 
     }
 
