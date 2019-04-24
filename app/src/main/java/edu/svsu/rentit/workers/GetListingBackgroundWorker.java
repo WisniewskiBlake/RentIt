@@ -90,9 +90,10 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
                 double lat1 = jb.getDouble("lat");
                 double lon1 = jb.getDouble("lon");
                 String img = jb.getString("image");
+                String review = jb.getString("review");
+                String reviewCount = jb.getString("reviewCount");
 
-
-                listings.add(new Listing(id, userId, username, title, description,  address, lat1, lon1, contact, price, status, img));
+                listings.add(new Listing(id, userId, username, title, description,  address, lat1, lon1, contact, price, status, img, review, reviewCount));
             }
 
             // Create local store of listings

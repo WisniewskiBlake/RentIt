@@ -33,6 +33,28 @@ public class Listing implements Serializable {
     private String status;
     private String image;
 
+    private String review;
+    private String reviewCount;
+
+    public Listing(int newId, int newUserId, String newUsername, String newTitle, String newDescription, String newAddress, double newLat, double newLon,
+                   String newContact, double newPrice, String newStatus, String newImage, String newReview, String newReviewCount) {
+
+        id = newId;
+        userId = newUserId;
+        username = newUsername;
+        title = newTitle;
+        description = newDescription;
+
+        setAddress(newAddress);
+
+        contact = newContact;
+        price = newPrice;
+        setDistance(newLat, newLon);
+        status = newStatus;
+        image = newImage;
+        review = newReview;
+        reviewCount = newReviewCount;
+    }
     public Listing(int newId, int newUserId, String newUsername, String newTitle, String newDescription, String newAddress, double newLat, double newLon,
                    String newContact, double newPrice, String newStatus, String newImage) {
 
@@ -49,6 +71,7 @@ public class Listing implements Serializable {
         setDistance(newLat, newLon);
         status = newStatus;
         image = newImage;
+
     }
 
     public int getId() { return id; }
@@ -81,7 +104,8 @@ public class Listing implements Serializable {
     public double getDistance() { return distance; }
     public String getStatus() { return status; }
     public String getImage() { return image; }
-
+    public String getReview() { return review; }
+    public String getReviewCount() { return reviewCount; }
     public Boolean hasFullAddress() { return fullAddress; }
 
     public void setTitle(String newTitle) { title = newTitle; }

@@ -30,6 +30,7 @@ public class ViewListingActivity extends AppCompatActivity {
     TextView txt_Title;
     TextView txt_Price;
     TextView txt_Description;
+    TextView review_text;
 
     FloatingActionButton btn_Edit;
     Button btn_Owner;
@@ -45,6 +46,7 @@ public class ViewListingActivity extends AppCompatActivity {
         txt_Title = findViewById(R.id.textView_title);
         txt_Price = findViewById(R.id.textView_price);
         txt_Description = findViewById(R.id.textView_description);
+        review_text = findViewById(R.id.ratingText);
 
         btn_Edit = findViewById(R.id.button_update);
         btn_Owner = findViewById(R.id.button_Owner);
@@ -54,6 +56,7 @@ public class ViewListingActivity extends AppCompatActivity {
         if (getIntent().hasExtra("LISTING_ID")) {
             listingId = getIntent().getIntExtra("LISTING_ID", -1);
             currentListing = ((RentItApplication) getApplication()).getListingById(listingId);
+            review_text.setText(currentListing.getReview()); //DB NEEDS TO BE CHANGED SO USER RATING ATTACHES TO LISTING, METHOD RETURNS NULL
         }
 
         if (((RentItApplication) this.getApplication()).hasUser()) {
