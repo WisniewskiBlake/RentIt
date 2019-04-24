@@ -93,6 +93,13 @@ public class ViewListingActivity extends AppCompatActivity {
             }
         });
 
+
+
+        if (((RentItApplication) this.getApplication()).hasUser()) {
+            btn_request.setVisibility(View.VISIBLE);
+        } else {
+            btn_request.setVisibility(View.INVISIBLE);
+        }
         btn_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

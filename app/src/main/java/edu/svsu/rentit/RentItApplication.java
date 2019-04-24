@@ -33,6 +33,8 @@ public class RentItApplication extends Application {
         this.currentUser = newUser;
     }
 
+    public void logoutUser() { this.currentUser = null; }
+
     public boolean hasListing() { return (currentListings != null && currentListings.size() > 0); }
 
     public ArrayList<Listing> getListings() { return currentListings; }

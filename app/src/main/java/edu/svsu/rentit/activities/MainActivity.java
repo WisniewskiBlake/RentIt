@@ -168,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
             editor.remove("UserId");
             editor.commit();
 
+            ((RentItApplication) this.getApplication()).logoutUser();
+
             validated = false;
             invalidateOptionsMenu();
         } else if (id == R.id.action_view_profile) {
