@@ -116,6 +116,9 @@ public class ViewListingActivity extends AppCompatActivity {
     {
         super.onResume();
 
+        currentListing = ((RentItApplication) getApplication()).getListingById(listingId);
+        setOutput(currentListing);
+
         // Finish activity if listing has been removed
         if (currentListing.getStatus().equals("inactive")) finish();
     }

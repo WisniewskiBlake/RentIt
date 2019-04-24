@@ -51,6 +51,7 @@ public class Listing implements Serializable {
         image = newImage;
     }
 
+
     public int getId() { return id; }
     public int getUserId() { return userId; }
     public String getUsername() { return username; }
@@ -83,6 +84,8 @@ public class Listing implements Serializable {
     public String getImage() { return image; }
 
     public Boolean hasFullAddress() { return fullAddress; }
+
+    public void setImage(String img) { image = img; }
 
     public void setTitle(String newTitle) { title = newTitle; }
     public void setDescription(String newDescription) { description = newDescription; }

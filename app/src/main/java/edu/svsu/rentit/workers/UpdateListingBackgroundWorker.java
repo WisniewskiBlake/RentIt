@@ -21,6 +21,8 @@ public class UpdateListingBackgroundWorker extends AsyncTask<String, String, Str
 
     String listingId;
 
+    String image;
+
     public UpdateListingBackgroundWorker(Context ctx) {
         context = ctx;
     }
@@ -40,7 +42,8 @@ public class UpdateListingBackgroundWorker extends AsyncTask<String, String, Str
         reader.addParam("contact", params[4]);
         reader.addParam("price", params[5]);
         if(params[6] != null) {
-            reader.addParam("image", params[6]);
+            image = params[6];
+            reader.addParam("image", image);
             reader.addParam("name", params[7]);
         }
 
@@ -69,6 +72,8 @@ public class UpdateListingBackgroundWorker extends AsyncTask<String, String, Str
             try {
                 Listing listing = ((RentItApplication) ((UpdateListingActivity)context).getApplication()).getListingById(Integer.parseInt(listingId));
                 listing.setDistance(coords.getDouble("lat"), coords.getDouble("lon"));
+
+                listing.setImage(image);
 
                 ((RentItApplication) ((UpdateListingActivity)context).getApplication()).updateListing(listing);
 
