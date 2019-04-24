@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private int Id;
+    private String Username;
 
     private String FirstName;
     private String LastName;
@@ -21,11 +22,14 @@ public class User implements Serializable {
 
     private String Bio;
 
+    private int Admin = 0;
+
     public User(JSONObject userJSONObject)
     {
         try {
 
             Id = userJSONObject.getInt("id");
+            if (userJSONObject.has("username")) Username = userJSONObject.getString("username");
             FirstName = userJSONObject.getString("firstname");
             LastName = userJSONObject.getString("lastname");
             Address = userJSONObject.getString("address");
@@ -33,16 +37,20 @@ public class User implements Serializable {
             State = userJSONObject.getString("state");
             Zipcode = userJSONObject.getString("zipcode");
             Bio = userJSONObject.getString( "bio" );
+            Admin = userJSONObject.optInt("admin", 0);
 
         } catch (JSONException ex) {
             Log.d("DEBUG", ex.toString());
         }
     }
 
+
     public int getId()
     {
         return Id;
     }
+
+    public String getUsername() { if (Username != null) return Username; else return ""; }
 
     public String getIdString()
     {
@@ -62,4 +70,6 @@ public class User implements Serializable {
     public String getZipcode() { return Zipcode; }
 
     public String getBio() { return Bio; }
+
+    public Boolean isAdmin() { return Admin == 1; }
 }

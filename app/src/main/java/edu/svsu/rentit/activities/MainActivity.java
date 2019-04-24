@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.widget.Filter;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import edu.svsu.rentit.ListingViewAdapter;
 import edu.svsu.rentit.R;
@@ -100,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         menu.findItem(R.id.validate).setVisible(false);
         menu.findItem(R.id.action_manage).setVisible(false);
+        menu.findItem(R.id.action_users).setVisible(false);
         menu.findItem(R.id.action_view_profile).setVisible(false);
         menu.findItem(R.id.action_logout).setVisible(false);
 
@@ -135,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
             menu.findItem(R.id.action_manage).setVisible(true);
             menu.findItem(R.id.action_view_profile).setVisible(true);
             menu.findItem(R.id.action_logout).setVisible(true);
+
+            if (currentUser != null && currentUser.isAdmin()) menu.findItem(R.id.action_users).setVisible(true);
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -171,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.action_view_profile) {
             Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("CURRENT_USER", currentUser);
+            startActivity(intent);
+        } else if (id == R.id.action_users) {
+            Intent intent = new Intent(this, ManageUsersActivity.class);
             startActivity(intent);
         }
 
