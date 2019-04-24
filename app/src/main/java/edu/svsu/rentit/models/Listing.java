@@ -31,9 +31,10 @@ public class Listing implements Serializable {
     private double distance;
 
     private String status;
+    private String image;
 
     public Listing(int newId, int newUserId, String newUsername, String newTitle, String newDescription, String newAddress, double newLat, double newLon,
-                   String newContact, double newPrice, String newStatus) {
+                   String newContact, double newPrice, String newStatus, String newImage) {
 
         id = newId;
         userId = newUserId;
@@ -47,6 +48,7 @@ public class Listing implements Serializable {
         price = newPrice;
         setDistance(newLat, newLon);
         status = newStatus;
+        image = newImage;
     }
 
     public int getId() { return id; }
@@ -78,6 +80,7 @@ public class Listing implements Serializable {
     }
     public double getDistance() { return distance; }
     public String getStatus() { return status; }
+    public String getImage() { return image; }
 
     public Boolean hasFullAddress() { return fullAddress; }
 

@@ -1,16 +1,19 @@
 package edu.svsu.rentit.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import edu.svsu.rentit.RentItApplication;
 import edu.svsu.rentit.models.Listing;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import edu.svsu.rentit.models.User;
 import edu.svsu.rentit.workers.CreateListingBackgroundWorker;
 import edu.svsu.rentit.R;
@@ -19,6 +22,9 @@ public class CreateListingActivity extends AppCompatActivity {
 
     User currentUser;
 
+    TextView name;
+    ImageView imgView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +32,8 @@ public class CreateListingActivity extends AppCompatActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolbar.setTitle("RentIT - Create Listing");
         //setSupportActionBar(toolbar);
+        name = findViewById(R.id.name);
+        imgView = findViewById(R.id.img_view);
 
         currentUser = (User)getIntent().getSerializableExtra("USER");
 
