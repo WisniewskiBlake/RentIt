@@ -56,7 +56,7 @@ public class RentItApplication extends Application {
 
     public void addListing(Listing newListing) {
         Log.d("DEBUG", "BEFORE " + currentListings.size());
-        currentListings.add(newListing);
+        currentListings.add(0, newListing);
         Log.d("DEBUG", "AFTER " + currentListings.size());
     }
 
