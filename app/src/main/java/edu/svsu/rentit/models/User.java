@@ -21,6 +21,8 @@ public class User implements Serializable {
     private String Zipcode;
 
     private String Bio;
+    private String Review;
+    private String ReviewCount;
 
     private int Admin = 0;
 
@@ -38,7 +40,8 @@ public class User implements Serializable {
             Zipcode = userJSONObject.getString("zipcode");
             Bio = userJSONObject.getString( "bio" );
             Admin = userJSONObject.optInt("admin", 0);
-
+            Review = userJSONObject.getString( "review" );
+            ReviewCount = userJSONObject.getString( "reviewCount" );
         } catch (JSONException ex) {
             Log.d("DEBUG", ex.toString());
         }
@@ -72,4 +75,7 @@ public class User implements Serializable {
     public String getBio() { return Bio; }
 
     public Boolean isAdmin() { return Admin == 1; }
+
+    public String getReview(){ return Review;}
+    public String getReviewCount(){ return ReviewCount;}
 }
