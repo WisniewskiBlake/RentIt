@@ -1,10 +1,10 @@
-package edu.svsu.rentit.workers;
+package edu.svsu.rentit.models;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
-import edu.svsu.rentit.HttpURLConnectionReader;
+
+import edu.svsu.rentit.models.HttpURLConnectionReader;
 
 public class SubmitReviewBackgroundWorker extends AsyncTask<String, String, String> {
 
@@ -41,8 +41,8 @@ public class SubmitReviewBackgroundWorker extends AsyncTask<String, String, Stri
     @Override
     protected void onPostExecute(String result) {
         try {
-            Toast toast = Toast.makeText(context,"submit successful",Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(context,"submit successful",Toast.LENGTH_SHORT);
+//            toast.show();
         } catch (Exception e) {}
     }
 }

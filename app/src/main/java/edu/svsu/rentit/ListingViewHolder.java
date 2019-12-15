@@ -44,12 +44,14 @@ public class ListingViewHolder extends RecyclerView.ViewHolder implements View.O
         description.setText(listing.getDescription());
         price.setText(String.format("$%.2f", listing.getPrice()));
         distance.setText(String.format("%.2f", listing.getDistance()) + " mi.");
-        String list_image = listing.getImage();
-        if(list_image != null) {
-            byte[] imageBytes = Base64.decode(list_image, Base64.DEFAULT);
-            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-            image.setImageBitmap(decodedImage);
-        }
+        int list_image = listing.getImage();
+        image.setImageResource(list_image);
+
+//        if(list_image != null) {
+//            byte[] imageBytes = Base64.decode(list_image, Base64.DEFAULT);
+//            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+//            image.setImageBitmap(decodedImage);
+//        }
     }
 
     @Override

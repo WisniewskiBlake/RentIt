@@ -1,77 +1,56 @@
-package edu.svsu.rentit.workers;
+package edu.svsu.rentit.models;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
-import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.R;
+import edu.svsu.rentit.models.HttpURLConnectionReader;
 import edu.svsu.rentit.RentItApplication;
-import edu.svsu.rentit.activities.LoginActivity;
 import edu.svsu.rentit.models.Listing;
 import edu.svsu.rentit.activities.MainActivity;
-import edu.svsu.rentit.R;
-import edu.svsu.rentit.ListingViewAdapter;
-
-import static java.lang.Float.parseFloat;
 
 
-public class GetListingBackgroundWorker extends AsyncTask<String, String, String> {
+public class GetListingBackgroundWorker
+        extends AsyncTask<String, String, String>
+        {
 
     Context context;
     AlertDialog alertDialog;
 
-
     public GetListingBackgroundWorker(Context ctx) {
         context = ctx;
     }
-
     @Override
     protected String doInBackground(String... params) {
 
-        if (params.length == 1) {
-
-        }
-
-        //
         HttpURLConnectionReader reader = new HttpURLConnectionReader("get_listing.php");
 
         String response;
         try {
             response = reader.getResponse();
             return response;
-
         } catch (Exception e) {
             e.printStackTrace();
             return e.toString();
         }
-
     }
 
+            //after we get the info we need, which in this case is all the listings, we pass it to
+    //on post execute method to assign variables to each piece of information that we get
+    //    //
     @Override
     protected void onPostExecute(String result) {
 
+        String test = result;
         ArrayList<Listing> listings = new ArrayList<>();
-
         try {
 
             JSONArray jArray = new JSONArray(result);
@@ -89,7 +68,19 @@ public class GetListingBackgroundWorker extends AsyncTask<String, String, String
                 String status = jb.getString("status");
                 double lat1 = jb.getDouble("lat");
                 double lon1 = jb.getDouble("lon");
-                String img = jb.getString("image");
+                int img = 0;
+                if(i == 4) {
+                    img = R.drawable.beets;
+                } else if(i == 3) {
+                    img = R.drawable.carrots;
+                }else if(i == 2) {
+                    img = R.drawable.lettuce;
+                }else if(i == 1) {
+                    img = R.drawable.tomatoes;
+                }else if(i == 0) {
+                    img = R.drawable.strawberries;
+                }
+
                 String review = jb.getString("review");
                 String reviewCount = jb.getString("reviewCount");
 

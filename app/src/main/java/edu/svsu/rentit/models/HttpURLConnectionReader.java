@@ -1,4 +1,4 @@
-package edu.svsu.rentit;
+package edu.svsu.rentit.models;
 
 import android.content.ContentValues;
 import android.util.Log;
@@ -15,7 +15,7 @@ import java.net.URLEncoder;
 
 public class HttpURLConnectionReader {
 
-    private static String baseUrl = "http://18.224.109.190/rentit/scripts/";
+    private static String baseUrl = "http://18.191.86.23/rentit/scripts/";
 
     private String scriptName;
 
@@ -34,6 +34,8 @@ public class HttpURLConnectionReader {
         params.put(paramName, paramValue);
     }
 
+    //used in view profile and login activities, for example, when the profile button is clicked, key
+    //will == "userid" and for login key will == "password"
     private String getPostData()
     {
         StringBuilder postData = new StringBuilder();

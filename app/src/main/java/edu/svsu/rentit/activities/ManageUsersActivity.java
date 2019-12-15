@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import edu.svsu.rentit.R;
-import edu.svsu.rentit.workers.GetUsersBackgroundWorker;
+import edu.svsu.rentit.models.GetUsersBackgroundWorker;
 
 public class ManageUsersActivity extends AppCompatActivity {
 

@@ -1,11 +1,6 @@
 package edu.svsu.rentit.models;
 
-import android.media.Image;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.Serializable;
 
 public class Listing implements Serializable {
@@ -15,29 +10,25 @@ public class Listing implements Serializable {
     private String username;
     private String title;
     private String description;
-
     private Boolean fullAddress = false;
     private String address;
     private String city;
     private String state;
     private String zip;
     private String country;
-
     private String contact;
     private double price;
-
     private double latitude;
     private double longitude;
     private double distance;
-
     private String status;
-    private String image;
-
+    private int image;
+    private String image1;
     private String review;
     private String reviewCount;
 
     public Listing(int newId, int newUserId, String newUsername, String newTitle, String newDescription, String newAddress, double newLat, double newLon,
-                   String newContact, double newPrice, String newStatus, String newImage, String newReview, String newReviewCount) {
+                   String newContact, double newPrice, String newStatus, int newImage, String newReview, String newReviewCount) {
 
         id = newId;
         userId = newUserId;
@@ -56,7 +47,7 @@ public class Listing implements Serializable {
         reviewCount = newReviewCount;
     }
     public Listing(int newId, int newUserId, String newUsername, String newTitle, String newDescription, String newAddress, double newLat, double newLon,
-                   String newContact, double newPrice, String newStatus, String newImage) {
+                   String newContact, double newPrice, String newStatus, String newImage, String newReview, String newReviewCount) {
 
         id = newId;
         userId = newUserId;
@@ -70,10 +61,10 @@ public class Listing implements Serializable {
         price = newPrice;
         setDistance(newLat, newLon);
         status = newStatus;
-        image = newImage;
-
+        image1 = newImage;
+        review = newReview;
+        reviewCount = newReviewCount;
     }
-
 
     public int getId() { return id; }
     public int getUserId() { return userId; }
@@ -104,12 +95,12 @@ public class Listing implements Serializable {
     }
     public double getDistance() { return distance; }
     public String getStatus() { return status; }
-    public String getImage() { return image; }
+    public int getImage() { return image; }
     public String getReview() { return review; }
     public String getReviewCount() { return reviewCount; }
     public Boolean hasFullAddress() { return fullAddress; }
 
-    public void setImage(String img) { image = img; }
+    public void setImage(int img) { image = img; }
 
     public void setTitle(String newTitle) { title = newTitle; }
     public void setDescription(String newDescription) { description = newDescription; }

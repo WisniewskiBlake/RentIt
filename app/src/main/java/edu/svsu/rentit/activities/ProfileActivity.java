@@ -1,22 +1,16 @@
 package edu.svsu.rentit.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import edu.svsu.rentit.models.User;
-import edu.svsu.rentit.workers.GetListingBackgroundWorker;
-import edu.svsu.rentit.workers.ProfileBackgroundWorker;
+import edu.svsu.rentit.models.ProfileBackgroundWorker;
 import edu.svsu.rentit.R;
-import edu.svsu.rentit.workers.SubmitReviewBackgroundWorker;
+import edu.svsu.rentit.models.SubmitReviewBackgroundWorker;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -48,10 +42,12 @@ public class ProfileActivity extends AppCompatActivity {
         txt_Bio = findViewById(R.id.textView_bio);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
-        // Grab User object from Intent
-        if (getIntent().hasExtra("CURRENT_USER")) {
-            currentUser = (User)getIntent().getSerializableExtra("CURRENT_USER");
+        // Grab User object from Intent CURRENT_USER
+        if (getIntent().hasExtra("USER")) {
+            currentUser = (User)getIntent().getSerializableExtra("USER");
             setUser(currentUser);
+            ProfileBackgroundWorker profileWorker = new ProfileBackgroundWorker(ProfileActivity.this);
+            profileWorker.execute(getIntent().getStringExtra("USER_ID"));
         }
 
         if (getIntent().hasExtra("USER_ID")) {

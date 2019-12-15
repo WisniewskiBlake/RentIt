@@ -19,7 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import edu.svsu.rentit.models.User;
-import edu.svsu.rentit.workers.CreateListingBackgroundWorker;
+import edu.svsu.rentit.models.CreateListingBackgroundWorker;
 import edu.svsu.rentit.R;
 
 public class CreateListingActivity extends AppCompatActivity implements View.OnClickListener {

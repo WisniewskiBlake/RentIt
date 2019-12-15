@@ -5,14 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.svsu.rentit.R;
 import edu.svsu.rentit.models.User;
-import edu.svsu.rentit.workers.LoginBackgroundWorker;
-import edu.svsu.rentit.workers.ProfileBackgroundWorker;
 
 public class ManageUserActivity extends AppCompatActivity {
 

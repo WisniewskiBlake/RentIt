@@ -9,7 +9,6 @@ import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,13 +18,12 @@ import android.widget.Spinner;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import edu.svsu.rentit.R;
 import edu.svsu.rentit.RentItApplication;
 import edu.svsu.rentit.models.Listing;
-import edu.svsu.rentit.workers.RemoveListingBackgroundWorker;
-import edu.svsu.rentit.workers.UpdateListingBackgroundWorker;
+import edu.svsu.rentit.models.RemoveListingBackgroundWorker;
+import edu.svsu.rentit.models.UpdateListingBackgroundWorker;
 
 import static java.lang.Double.parseDouble;
 

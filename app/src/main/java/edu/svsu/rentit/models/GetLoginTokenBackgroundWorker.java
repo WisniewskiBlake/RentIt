@@ -1,4 +1,4 @@
-package edu.svsu.rentit.workers;
+package edu.svsu.rentit.models;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,9 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import edu.svsu.rentit.RentItApplication;
-import edu.svsu.rentit.activities.LoginActivity;
 import edu.svsu.rentit.activities.MainActivity;
 import edu.svsu.rentit.models.User;
-import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.models.HttpURLConnectionReader;
 
 import static android.content.Context.MODE_PRIVATE;
 

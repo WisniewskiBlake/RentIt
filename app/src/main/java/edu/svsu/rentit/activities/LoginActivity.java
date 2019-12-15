@@ -1,12 +1,6 @@
 package edu.svsu.rentit.activities;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -20,7 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import edu.svsu.rentit.models.User;
-import edu.svsu.rentit.workers.LoginBackgroundWorker;
+import edu.svsu.rentit.models.LoginBackgroundWorker;
 import edu.svsu.rentit.R;
 
 public class LoginActivity extends AppCompatActivity {

@@ -49,14 +49,5 @@ public class ListingViewAdapter extends RecyclerView.Adapter{
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public void insert(int pos, Listing listing) {
-        list.add(pos, listing);
-        notifyItemInserted(pos);
-    }
 
-    public void remove(Listing listing) {
-        int pos = list.indexOf(listing);
-        list.remove(pos);
-        notifyItemRemoved(pos);
-    }
 }

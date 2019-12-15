@@ -1,4 +1,4 @@
-package edu.svsu.rentit.workers;
+package edu.svsu.rentit.models;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import edu.svsu.rentit.RentItApplication;
 import edu.svsu.rentit.activities.LoginActivity;
-import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.models.HttpURLConnectionReader;
 import edu.svsu.rentit.models.User;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -84,6 +84,9 @@ public class LoginBackgroundWorker extends AsyncTask<String, String, String> {
                 context.sendBroadcast(new Intent("loginSuccess"));
 
                 ((LoginActivity)context).finish();
+//                Intent intent = new Intent(context, LoggedInUserActivity.class);
+//
+//                context.startActivity(intent);
 
             } else {
 

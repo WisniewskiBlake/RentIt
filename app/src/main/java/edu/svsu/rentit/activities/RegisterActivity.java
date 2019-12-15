@@ -1,5 +1,6 @@
 package edu.svsu.rentit.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import edu.svsu.rentit.R;
-import edu.svsu.rentit.workers.RegisterBackgroundWorker;
+import edu.svsu.rentit.models.RegisterWorker;
 
 public class RegisterActivity extends AppCompatActivity   {
 
@@ -25,6 +26,9 @@ public class RegisterActivity extends AppCompatActivity   {
             @Override
             public void onClick(View v) {
 
+
+
+
                 EditText etFirstName = findViewById(R.id.txt_FirstName);
                 final String User_FirstName = etFirstName.getEditableText().toString();
                 EditText etLastName = findViewById(R.id.txt_LastName);
@@ -35,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity   {
                 final String User_Password = etPassword.getEditableText().toString();
 
 
-                RegisterBackgroundWorker registerWorker = new RegisterBackgroundWorker(RegisterActivity.this);
+                RegisterWorker registerWorker = new RegisterWorker(RegisterActivity.this);
                 registerWorker.execute(User_FirstName, User_LastName, User_Email, User_Password);
             }
         });

@@ -56,7 +56,7 @@ public class ViewListingActivity extends AppCompatActivity {
         if (getIntent().hasExtra("LISTING_ID")) {
             listingId = getIntent().getIntExtra("LISTING_ID", -1);
             currentListing = ((RentItApplication) getApplication()).getListingById(listingId);
-            review_text.setText(currentListing.getReview()); //DB NEEDS TO BE CHANGED SO USER RATING ATTACHES TO LISTING, METHOD RETURNS NULL
+            review_text.setText(currentListing.getReview().substring(0, 3));
         }
 
         if (((RentItApplication) this.getApplication()).hasUser()) {
@@ -132,12 +132,13 @@ public class ViewListingActivity extends AppCompatActivity {
         txt_Title.setText(listing.getTitle());
         txt_Description.setText(listing.getDescription());
         txt_Price.setText("$" + String.format("%.2f", listing.getPrice()));
-        String list_image = listing.getImage();
-        if(list_image != null) {
-            byte[] imageBytes = Base64.decode(list_image, Base64.DEFAULT);
-            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-            img_Main.setImageBitmap(decodedImage);
-        }
+        int list_image = listing.getImage();
+        img_Main.setImageResource(list_image);
+//        if(list_image != null) {
+//            byte[] imageBytes = Base64.decode(list_image, Base64.DEFAULT);
+//            Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+//            img_Main.setImageBitmap(decodedImage);
+//        }
     }
 
     public void setOutput(String title, String description, String price)

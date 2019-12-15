@@ -1,8 +1,7 @@
-package edu.svsu.rentit.workers;
+package edu.svsu.rentit.models;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +12,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.models.HttpURLConnectionReader;
 import edu.svsu.rentit.R;
-import edu.svsu.rentit.RentItApplication;
 import edu.svsu.rentit.UserViewAdapter;
-import edu.svsu.rentit.activities.MainActivity;
 import edu.svsu.rentit.activities.ManageUsersActivity;
-import edu.svsu.rentit.models.Listing;
 import edu.svsu.rentit.models.User;
 
 

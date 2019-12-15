@@ -1,6 +1,5 @@
-package edu.svsu.rentit.workers;
+package edu.svsu.rentit.models;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -8,10 +7,9 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.models.HttpURLConnectionReader;
 import edu.svsu.rentit.RentItApplication;
 import edu.svsu.rentit.activities.CreateListingActivity;
-import edu.svsu.rentit.activities.UpdateListingActivity;
 import edu.svsu.rentit.models.Listing;
 
 public class CreateListingBackgroundWorker extends AsyncTask<String, String, String> {

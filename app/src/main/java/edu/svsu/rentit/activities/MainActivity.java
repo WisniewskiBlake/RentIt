@@ -23,15 +23,19 @@ import edu.svsu.rentit.R;
 import edu.svsu.rentit.RentItApplication;
 import edu.svsu.rentit.models.Listing;
 import edu.svsu.rentit.models.User;
-import edu.svsu.rentit.workers.GetListingBackgroundWorker;
-import edu.svsu.rentit.workers.GetLoginTokenBackgroundWorker;
+import edu.svsu.rentit.models.GetListingBackgroundWorker;
+import edu.svsu.rentit.models.GetLoginTokenBackgroundWorker;
 
 public class MainActivity extends AppCompatActivity {
 
+    // check if login is valid
     private boolean validating;
     private boolean validated;
+
+    //keep track of current user
     User currentUser;
 
+    //create array list that holds all of the listings we want to populate in the listview
     ArrayList<Listing> listings = new ArrayList<Listing>();
 
     @Override
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        // Check if login token exists
+        // Check if login token exists (check if remember me is checked)
         SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
 
         if (sp.contains("Token") && sp.contains("UserId")) {
@@ -152,6 +156,12 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_register) {
             startActivity(new Intent(this, RegisterActivity.class));
+        }else if (id == R.id.action_view_profile) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            //"CURRENT_USER"
+            intent.putExtra("USER_ID", currentUser.getIdString());
+
+            startActivity(intent);
         }else if(id == R.id.action_login) {
             startActivity(new Intent(this, LoginActivity.class));
         } else if (id == R.id.action_manage) {
@@ -172,11 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
             validated = false;
             invalidateOptionsMenu();
-        } else if (id == R.id.action_view_profile) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.putExtra("CURRENT_USER", currentUser);
-            startActivity(intent);
-        } else if (id == R.id.action_users) {
+        }  else if (id == R.id.action_users) {
             Intent intent = new Intent(this, ManageUsersActivity.class);
             startActivity(intent);
         }

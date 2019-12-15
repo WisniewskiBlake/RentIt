@@ -1,4 +1,4 @@
-package edu.svsu.rentit.workers;
+package edu.svsu.rentit.models;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,9 +6,8 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.models.HttpURLConnectionReader;
 import edu.svsu.rentit.activities.ProfileActivity;
-import edu.svsu.rentit.models.User;
 
 public class ProfileBackgroundWorker extends AsyncTask<String, String, String> {
 

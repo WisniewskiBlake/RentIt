@@ -12,10 +12,10 @@ public class RentItApplication extends Application {
 
     private User currentUser;
 
-    private boolean listingsChangedFlag;
+
     private ArrayList<Listing> currentListings;
 
-    public void RentItApplication() {
+    public RentItApplication() {
 
         // Initialize listings array
         currentListings = new ArrayList<>();

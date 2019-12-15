@@ -1,4 +1,4 @@
-package edu.svsu.rentit.workers;
+package edu.svsu.rentit.models;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,15 +7,15 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import edu.svsu.rentit.HttpURLConnectionReader;
+import edu.svsu.rentit.models.HttpURLConnectionReader;
 import edu.svsu.rentit.activities.LoginActivity;
 
-public class RegisterBackgroundWorker extends AsyncTask<String, String, String> {
+public class RegisterWorker extends AsyncTask<String, String, String> {
 
     Context context;
 
 
-    public RegisterBackgroundWorker(Context ctx) {
+    public RegisterWorker(Context ctx) {
         context = ctx;
     }
 
