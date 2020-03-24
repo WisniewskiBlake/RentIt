@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FarmShare</string>
+    <string name="app_name">RentIt</string>
     <string name="action_register">Register</string>
     <string name="action_login">Log in</string>
     <string name="title_activity_profile_">Profile_Activity</string>
