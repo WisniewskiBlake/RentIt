@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 listings = ((RentItApplication) getApplication()).getListings();
 
                 // Update RecyclerView
-                updateListings(listings);
+                update(listings);
             }
         }, new IntentFilter("listingsGet"));
 
@@ -196,11 +196,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         if (((RentItApplication) getApplication()).hasListing()) {
-            updateListings(listings);
+            update(listings);
         }
     }
 
-    private void updateListings(ArrayList<Listing> newListings)
+    private void update(ArrayList<Listing> newListings)
     {
         // Only display active listings in MainActivity
         ArrayList<Listing> activeListings = new ArrayList<>();
@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
-            updateListings((ArrayList)results.values);
+            update((ArrayList)results.values);
         }
     };
 
